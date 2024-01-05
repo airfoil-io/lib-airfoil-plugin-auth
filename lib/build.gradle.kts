@@ -58,6 +58,17 @@ val useSnapshots = if (project.properties["useSnapshots"]?.toString() == null) {
 dependencies {
     listOf(
         Dependencies.Airfoil.LibCommon,
+        Dependencies.Exposed.Core,
+		Dependencies.Exposed.Dao,
+		Dependencies.Exposed.Datetime,
+		Dependencies.Exposed.Jdbc,
+        Dependencies.Flyway.Core,
+        Dependencies.Kotlinx.Datetime,
+        Dependencies.Ktor.KotlinxSerialization.Json,
+        Dependencies.Ktor.Server.Auth,
+        Dependencies.Ktor.Server.AuthJwt,
+        Dependencies.Ktor.Server.Core,
+        Dependencies.MicroUtils.KotlinLogging,
     ).forEach { dep ->
         dep.implementation(this, useSnapshots)
     }
