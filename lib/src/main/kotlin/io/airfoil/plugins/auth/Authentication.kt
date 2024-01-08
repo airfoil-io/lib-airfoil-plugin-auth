@@ -1,6 +1,7 @@
 package io.airfoil.plugins.auth
 
 import io.airfoil.common.exception.InvalidConfigurationException
+import io.airfoil.plugins.auth.authenticators.Authenticator
 import io.airfoil.plugins.auth.config.AuthenticationConfiguration
 import io.airfoil.plugins.auth.database.*
 import io.ktor.server.application.*
@@ -39,30 +40,17 @@ private val authProvidersKey = AttributeKey<List<String>>("AuthProviders")
 val Application.authProviders: Array<out String>
     get() = attributes[authProvidersKey].toTypedArray()
 
-private class AuthenticationControllerArguments {
-    var passwordAuthenticator: PasswordAuthenticator? = null
-    lateinit var config: AuthenticationConfiguration
-}
-
 fun Application.configureAuthentication(
     dbUrl: String,
     dbUsername: String,
     dbPassword: String,
-    apiKey16Authenticator: ApiKey16Authenticator? = null,
-    apiKey32Authenticator: ApiKey32Authenticator? = null,
-    jwtAuthenticator: JwtAuthenticator? = null,
-    passwordAuthenticator: PasswordAuthenticator? = null,
     providers: List<AuthenticationProvider> = emptyList(),
+    authenticators: Map<String, Authenticator> = emptyMap(),
 ) {
     loadAuthenticationConfig()
     configureAuthFlywayMigration(dbUrl, dbUsername, dbPassword)
     configureAuthRepositories()
-    configureSession(
-        apiKey16Authenticator,
-        apiKey32Authenticator,
-        jwtAuthenticator,
-        passwordAuthenticator,
-    )
+    configureSession(authenticators)
 
     val application = this
     val allAuthProviders: List<AuthenticationProvider> = buildList {
@@ -91,21 +79,21 @@ fun Application.configureAuthentication(
     }
 
     install(AuthenticationControllerPlugin) {
-        this.passwordAuthenticator = passwordAuthenticator
-        config = authConfig
+        this.providers = authConfig.providers
+        session = authConfig.session
     }
 }
 
 private val AuthenticationControllerPlugin = createApplicationPlugin(
     name = "Authentication Controller Plugin",
-    createConfiguration = ::AuthenticationControllerArguments,
+    createConfiguration = ::AuthenticationConfiguration,
 ) {
     log.info { "Configuring authentication controller" }
 
     application.authenticationController(
         AuthenticationController(
-            passwordAuthenticator = pluginConfig.passwordAuthenticator,
-            config = pluginConfig.config,
+            sessionController = application.sessionController,
+            config = pluginConfig,
         )
     )
 }

@@ -8,13 +8,15 @@ import io.airfoil.plugins.auth.data.domain.dto.Session
 import io.ktor.server.application.*
 
 class AuthenticationController(
-    private val passwordAuthenticator: PasswordAuthenticator? = null,
+    private val sessionController: SessionController,
     private val config: AuthenticationConfiguration,
 ) {
 
+    /* TODO: with SessionController
     fun loginUserWithPassword(call: ApplicationCall, emailAddress: EmailAddress, password: Password): Session =
         passwordAuthenticator?.let {
             it(call, emailAddress, password)
         } ?: throw InvalidConfigurationException("Session controller missing password authenticator")
+    */
 
 }

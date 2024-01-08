@@ -2,6 +2,7 @@ package io.airfoil.plugins.auth
 
 import io.airfoil.common.extension.withLogMetadata
 import io.airfoil.common.plugin.createKtorApplicationPlugin
+import io.airfoil.plugins.auth.authenticators.Authenticator
 import io.airfoil.plugins.auth.config.SessionConfiguration
 import io.ktor.server.application.*
 import io.ktor.util.*
@@ -20,24 +21,15 @@ fun Application.sessionController(sessionController: SessionController) {
 }
 
 private class SessionControllerArguments {
-    var apiKey16Authenticator: ApiKey16Authenticator? = null
-    var apiKey32Authenticator: ApiKey32Authenticator? = null
-    var jwtAuthenticator: JwtAuthenticator? = null
-    var passwordAuthenticator: PasswordAuthenticator? = null
+    var authenticators: Map<String, Authenticator> = emptyMap()
     lateinit var config: SessionConfiguration
 }
 
 fun Application.configureSession(
-    apiKey16Authenticator: ApiKey16Authenticator? = null,
-    apiKey32Authenticator: ApiKey32Authenticator? = null,
-    jwtAuthenticator: JwtAuthenticator? = null,
-    passwordAuthenticator: PasswordAuthenticator? = null,
+    authenticators: Map<String, Authenticator> = emptyMap(),
 ) {
     install(SessionControllerPlugin) {
-        this.apiKey16Authenticator = apiKey16Authenticator
-        this.apiKey32Authenticator = apiKey32Authenticator
-        this.jwtAuthenticator = jwtAuthenticator
-        this.passwordAuthenticator = passwordAuthenticator
+        this.authenticators = authenticators
         config = authConfig.session ?: SessionConfiguration()
     }
 }
@@ -63,10 +55,7 @@ private val SessionControllerPlugin = createKtorApplicationPlugin(
 
     application.sessionController(
         SessionController(
-            apiKey16Authenticator = pluginConfig.apiKey16Authenticator,
-            apiKey32Authenticator = pluginConfig.apiKey32Authenticator,
-            jwtAuthenticator = pluginConfig.jwtAuthenticator,
-            passwordAuthenticator = pluginConfig.passwordAuthenticator,
+            authenticators = pluginConfig.authenticators,
             config = pluginConfig.config,
         )
     )

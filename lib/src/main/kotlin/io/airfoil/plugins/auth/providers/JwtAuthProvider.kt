@@ -32,11 +32,7 @@ class JwtAuthProvider(
             return
         }
 
-        val session = sessionController.authenticateJWT(context, bearerToken)
-        context.call.session(session)
-        context.principal(session.toPrincipal())
-
-        // TODO
+        sessionController.authenticateJWT(context, bearerToken)
     }
 
     private class Config(name: String) : AuthenticationProvider.Config(name)

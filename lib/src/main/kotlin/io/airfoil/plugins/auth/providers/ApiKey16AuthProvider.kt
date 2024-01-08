@@ -38,11 +38,7 @@ class ApiKey16AuthProvider(
             Key16(it)
         }
 
-        val session = sessionController.authenticateApiKey16(context, apiKey)
-        context.call.session(session)
-        context.principal(session.toPrincipal())
-
-        // TODO
+        sessionController.authenticateApiKey16(context, apiKey)
     }
 
     private class Config(name: String) : AuthenticationProvider.Config(name)

@@ -7,6 +7,7 @@ import io.ktor.server.config.ApplicationConfigurationException
 class SessionConfiguration {
     var jwt: JwtConfiguration? = null
     var apiKey: ApiKeyConfiguration? = null
+    var token: TokenConfiguration? = null
 
     companion object {
         const val CONFIG_KEY = "session"
@@ -18,6 +19,7 @@ class SessionConfiguration {
             SessionConfiguration().also {
                 it.jwt = JwtConfiguration.loadOrNull(cfg, "jwt")
                 it.apiKey = ApiKeyConfiguration.loadOrNull(cfg, "apiKey")
+                it.token = TokenConfiguration.loadOrNull(cfg, "token")
             }
         }
 

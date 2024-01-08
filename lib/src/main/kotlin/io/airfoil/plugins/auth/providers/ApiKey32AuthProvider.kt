@@ -38,11 +38,7 @@ class ApiKey32AuthProvider(
             Key32(it)
         }
 
-        val session = sessionController.authenticateApiKey32(context, apiKey)
-        context.call.session(session)
-        context.principal(session.toPrincipal())
-
-        // TODO
+        sessionController.authenticateApiKey32(context, apiKey)
     }
 
     private class Config(name: String) : AuthenticationProvider.Config(name)

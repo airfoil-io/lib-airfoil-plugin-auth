@@ -5,19 +5,19 @@ import io.ktor.server.config.ApplicationConfig
 import io.ktor.server.config.ApplicationConfigurationException
 
 class ApiKeyConfiguration {
-    lateinit var header: String
+    var requestHeader: String = DEFAULT_REQUEST_HEADER
 
     companion object {
         const val CONFIG_KEY = "apiKey"
 
-        const val DEFAULT_HEADER = "x-api-key"
+        const val DEFAULT_REQUEST_HEADER = "x-api-key"
 
         fun load(
             config: ApplicationConfig,
             configKey: String = CONFIG_KEY,
         ): ApiKeyConfiguration = config.config(configKey).let { cfg ->
             ApiKeyConfiguration().also {
-                it.header = cfg.stringValueOrDefault("header", DEFAULT_HEADER)
+                it.requestHeader = cfg.stringValueOrDefault("requestHeader", DEFAULT_REQUEST_HEADER)
             }
         }
 

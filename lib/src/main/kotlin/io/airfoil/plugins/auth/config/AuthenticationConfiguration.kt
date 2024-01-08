@@ -25,6 +25,6 @@ class AuthenticationConfiguration {
     }
 
     fun validate() {
-        
+        // TODO
     }
 }

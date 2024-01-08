@@ -76,13 +76,13 @@ object BuiltinAuth {
                     ApiKey16AuthProvider(
                         name = ApiKey16AuthProvider.REQUIRED,
                         sessionController = application.sessionController,
-                        apiKeyHeader = application.authConfig.session?.apiKey?.header 
+                        apiKeyHeader = application.authConfig.session?.apiKey?.requestHeader 
                             ?: ApiKey16AuthProvider.DEFAULT_API_KEY_HEADER,
                     ),
                     ApiKey16AuthProvider(
                         name = ApiKey16AuthProvider.OPTIONAL,
                         sessionController = application.sessionController,
-                        apiKeyHeader = application.authConfig.session?.apiKey?.header 
+                        apiKeyHeader = application.authConfig.session?.apiKey?.requestHeader 
                             ?: ApiKey16AuthProvider.DEFAULT_API_KEY_HEADER,
                     ),
                 )
@@ -97,13 +97,13 @@ object BuiltinAuth {
                     ApiKey32AuthProvider(
                         name = ApiKey32AuthProvider.REQUIRED,
                         sessionController = application.sessionController,
-                        apiKeyHeader = application.authConfig.session?.apiKey?.header 
+                        apiKeyHeader = application.authConfig.session?.apiKey?.requestHeader 
                             ?: ApiKey32AuthProvider.DEFAULT_API_KEY_HEADER,
                     ),
                     ApiKey32AuthProvider(
                         name = ApiKey32AuthProvider.OPTIONAL,
                         sessionController = application.sessionController,
-                        apiKeyHeader = application.authConfig.session?.apiKey?.header 
+                        apiKeyHeader = application.authConfig.session?.apiKey?.requestHeader 
                             ?: ApiKey32AuthProvider.DEFAULT_API_KEY_HEADER,
                     ),
                 )

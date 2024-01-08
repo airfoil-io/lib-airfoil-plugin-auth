@@ -15,6 +15,9 @@ CREATE TABLE IF NOT EXISTS api_key (
     UNIQUE(api_key)
 );
 
+/*
+    The "update_api_key_updated_at" function updates the "updated_at" column.
+*/
 CREATE FUNCTION update_api_key_updated_at()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -23,6 +26,10 @@ BEGIN
 END;
 $$ language 'plpgsql';
 
+/*
+    The "trigger_update_api_key_updated_at" calls the "update_api_key_updated_at"
+    function whenever a row in the "api_key" table is updated.
+*/
 CREATE TRIGGER trigger_update_api_key_updated_at
     BEFORE UPDATE
     ON api_key

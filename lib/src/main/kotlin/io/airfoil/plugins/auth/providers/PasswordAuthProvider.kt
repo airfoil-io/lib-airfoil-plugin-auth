@@ -36,11 +36,7 @@ class PasswordAuthProvider(
             return
         }
 
-        val session = sessionController.authenticatePassword(context, request)
-        context.call.session(session)
-        context.principal(session.toPrincipal())
-
-        // TODO
+        sessionController.authenticatePassword(context, request)
     }
 
     private class Config(name: String) : AuthenticationProvider.Config(name)
