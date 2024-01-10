@@ -5,4 +5,6 @@ object AuthenticationMethods {
     val API_KEY = AuthenticationMethod("API_KEY")
     val PASSWORD = AuthenticationMethod("PASSWORD")
     val JWT = AuthenticationMethod("JWT")
+    val OTP = AuthenticationMethod("OTP")
+    val GOOGLE = AuthenticationMethod("GOOGLE")
 }

@@ -10,10 +10,11 @@ CREATE TABLE IF NOT EXISTS api_key (
     api_key         TEXT        NOT NULL,
     created_at      TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP(2),
     updated_at      TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP(2),
+    expires_at      TIMESTAMPTZ NOT NULL,
 
-    PRIMARY KEY(id),
-    UNIQUE(api_key)
+    PRIMARY KEY(id)
 );
+CREATE UNIQUE INDEX uq_api_key ON api_key(api_key);
 
 /*
     The "update_api_key_updated_at" function updates the "updated_at" column.

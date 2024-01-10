@@ -18,6 +18,7 @@ class ExposedApiKeyRepository : ApiKeyRepository {
             this.apiKey = apiKey.keyToString()
             this.createdAt = apiKey.createdAt
             this.updatedAt = apiKey.updatedAt
+            this.expiresAt = apiKey.expiresAt
         }.toDTO()
     }
 
@@ -43,11 +44,7 @@ class ExposedApiKeyRepository : ApiKeyRepository {
         ApiKeyRecord.findById(id.value)?.toDTO()
     }
 
-    override fun fetchByApiKey16OrNull(key: Key16): ApiKey? = transaction {
-        ApiKeyTable.findByAPIKey(key.value)?.toDTO()
-    }
-
-    override fun fetchByApiKey32OrNull(key: Key32): ApiKey? = transaction {
-        ApiKeyTable.findByAPIKey(key.value)?.toDTO()
+    override fun fetchByApiKeyOrNull(key: String): ApiKey? = transaction {
+        ApiKeyTable.findByAPIKey(key)?.toDTO()
     }
 }

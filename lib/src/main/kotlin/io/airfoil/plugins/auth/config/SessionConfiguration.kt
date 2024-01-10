@@ -6,6 +6,7 @@ import io.ktor.server.config.ApplicationConfigurationException
 
 class SessionConfiguration {
     var jwt: JwtConfiguration? = null
+    var google: GoogleConfiguration? = null
     var apiKey: ApiKeyConfiguration? = null
     var token: TokenConfiguration? = null
 
@@ -18,6 +19,7 @@ class SessionConfiguration {
         ): SessionConfiguration = config.config(configKey).let { cfg ->
             SessionConfiguration().also {
                 it.jwt = JwtConfiguration.loadOrNull(cfg, "jwt")
+                it.google = GoogleConfiguration.loadOrNull(cfg, "google")
                 it.apiKey = ApiKeyConfiguration.loadOrNull(cfg, "apiKey")
                 it.token = TokenConfiguration.loadOrNull(cfg, "token")
             }

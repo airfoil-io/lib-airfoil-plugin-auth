@@ -1,13 +1,12 @@
 package io.airfoil.plugins.auth.providers
 
-import io.airfoil.common.data.domain.dto.Key16
+import io.airfoil.common.data.domain.dto.Key32
 import io.airfoil.common.extension.headerOrNull
 import io.airfoil.plugins.auth.extension.challengeUnauthenticated
-import io.airfoil.plugins.auth.extension.session
 import io.airfoil.plugins.auth.SessionController
 import io.ktor.server.auth.*
 
-class ApiKey16AuthProvider(
+class ApiKeyAuthProvider(
     name: String,
     private val sessionController: SessionController,
     private val apiKeyHeader: String = DEFAULT_API_KEY_HEADER,
@@ -19,8 +18,8 @@ class ApiKey16AuthProvider(
     }
 
     companion object {
-        const val OPTIONAL: String = "auth-apikey16"
-        const val REQUIRED: String = "auth-apikey16-required"
+        const val OPTIONAL: String = "auth-apikey"
+        const val REQUIRED: String = "auth-apikey-required"
 
         const val DEFAULT_API_KEY_HEADER = "x-api-key"
     }
@@ -35,10 +34,10 @@ class ApiKey16AuthProvider(
                 }
                 return
             }
-            Key16(it)
+            it
         }
 
-        sessionController.authenticateApiKey16(context, apiKey)
+        sessionController.authenticateApiKey(context, apiKey)
     }
 
     private class Config(name: String) : AuthenticationProvider.Config(name)

@@ -14,6 +14,7 @@ data class ApiKey(
     val key32: Key32? = null,
     val createdAt: Instant = Clock.System.now(),
     val updatedAt: Instant = createdAt,
+    val expiresAt: Instant,
 ) {
 
     init {

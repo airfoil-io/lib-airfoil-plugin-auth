@@ -21,14 +21,16 @@ data class BuiltinAuthProvider(
 object BuiltinAuth {
     const val PASSWORD_AUTH_PROVIDER_KEY: String = "password"
     const val JWT_AUTH_PROVIDER_KEY: String = "jwt"
-    const val API_KEY_16_AUTH_PROVIDER_KEY: String = "apikey-16"
-    const val API_KEY_32_AUTH_PROVIDER_KEY: String = "apikey-32"
+    const val API_KEY_AUTH_PROVIDER_KEY: String = "apikey"
+    const val OTP_AUTH_PROVIDER_KEY: String = "otp"
+    const val GOOGLE_AUTH_PROVIDER_KEY: String = "google"
 
     val Keys: List<String> = listOf(
         PASSWORD_AUTH_PROVIDER_KEY,
         JWT_AUTH_PROVIDER_KEY,
-        API_KEY_16_AUTH_PROVIDER_KEY,
-        API_KEY_32_AUTH_PROVIDER_KEY,
+        API_KEY_AUTH_PROVIDER_KEY,
+        OTP_AUTH_PROVIDER_KEY,
+        GOOGLE_AUTH_PROVIDER_KEY,
     )
 
     val Providers: Map<String, BuiltinAuthProvider> = mapOf(
@@ -49,6 +51,7 @@ object BuiltinAuth {
             configValidator = { _ ->
             }
         ),
+        
         JWT_AUTH_PROVIDER_KEY to BuiltinAuthProvider(
             configurator = { application ->
                 log.info("Configuring JWT authentication provider")
@@ -69,42 +72,58 @@ object BuiltinAuth {
                 }
             }
         ),
-        API_KEY_16_AUTH_PROVIDER_KEY to BuiltinAuthProvider(
+
+        API_KEY_AUTH_PROVIDER_KEY to BuiltinAuthProvider(
             configurator = { application ->
-                log.info("Configuring 16-byte API key authentication provider")
+                log.info("Configuring API key authentication provider")
                 listOf(
-                    ApiKey16AuthProvider(
-                        name = ApiKey16AuthProvider.REQUIRED,
+                    ApiKeyAuthProvider(
+                        name = ApiKeyAuthProvider.REQUIRED,
                         sessionController = application.sessionController,
                         apiKeyHeader = application.authConfig.session?.apiKey?.requestHeader 
-                            ?: ApiKey16AuthProvider.DEFAULT_API_KEY_HEADER,
+                            ?: ApiKeyAuthProvider.DEFAULT_API_KEY_HEADER,
                     ),
-                    ApiKey16AuthProvider(
-                        name = ApiKey16AuthProvider.OPTIONAL,
+                    ApiKeyAuthProvider(
+                        name = ApiKeyAuthProvider.OPTIONAL,
                         sessionController = application.sessionController,
                         apiKeyHeader = application.authConfig.session?.apiKey?.requestHeader 
-                            ?: ApiKey16AuthProvider.DEFAULT_API_KEY_HEADER,
+                            ?: ApiKeyAuthProvider.DEFAULT_API_KEY_HEADER,
                     ),
                 )
             },
             configValidator = { _ ->
             }
         ),
-        API_KEY_32_AUTH_PROVIDER_KEY to BuiltinAuthProvider(
+
+        OTP_AUTH_PROVIDER_KEY to BuiltinAuthProvider(
             configurator = { application ->
-                log.info("Configuring 32-byte API key authentication provider")
+                log.info("Configuring OTP key authentication provider")
                 listOf(
-                    ApiKey32AuthProvider(
-                        name = ApiKey32AuthProvider.REQUIRED,
+                    OtpAuthProvider(
+                        name = OtpAuthProvider.REQUIRED,
                         sessionController = application.sessionController,
-                        apiKeyHeader = application.authConfig.session?.apiKey?.requestHeader 
-                            ?: ApiKey32AuthProvider.DEFAULT_API_KEY_HEADER,
                     ),
-                    ApiKey32AuthProvider(
-                        name = ApiKey32AuthProvider.OPTIONAL,
+                    OtpAuthProvider(
+                        name = OtpAuthProvider.OPTIONAL,
                         sessionController = application.sessionController,
-                        apiKeyHeader = application.authConfig.session?.apiKey?.requestHeader 
-                            ?: ApiKey32AuthProvider.DEFAULT_API_KEY_HEADER,
+                    ),
+                )
+            },
+            configValidator = { _ ->
+            }
+        ),
+
+        GOOGLE_AUTH_PROVIDER_KEY to BuiltinAuthProvider(
+            configurator = { application ->
+                log.info("Configuring Google authentication provider")
+                listOf(
+                    GoogleAuthProvider(
+                        name = GoogleAuthProvider.REQUIRED,
+                        sessionController = application.sessionController,
+                    ),
+                    GoogleAuthProvider(
+                        name = GoogleAuthProvider.OPTIONAL,
+                        sessionController = application.sessionController,
                     ),
                 )
             },

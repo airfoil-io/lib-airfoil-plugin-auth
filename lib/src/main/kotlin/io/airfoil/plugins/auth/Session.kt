@@ -4,6 +4,7 @@ import io.airfoil.common.extension.withLogMetadata
 import io.airfoil.common.plugin.createKtorApplicationPlugin
 import io.airfoil.plugins.auth.authenticators.Authenticator
 import io.airfoil.plugins.auth.config.SessionConfiguration
+import io.airfoil.plugins.auth.database.*
 import io.ktor.server.application.*
 import io.ktor.util.*
 import mu.KotlinLogging
@@ -56,6 +57,8 @@ private val SessionControllerPlugin = createKtorApplicationPlugin(
     application.sessionController(
         SessionController(
             authenticators = pluginConfig.authenticators,
+            apiKeyRepository = application.apiKeyRepository,
+            otpRepository = application.otpRepository,
             config = pluginConfig.config,
         )
     )

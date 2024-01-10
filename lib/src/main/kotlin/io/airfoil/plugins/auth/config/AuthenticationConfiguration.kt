@@ -19,12 +19,8 @@ class AuthenticationConfiguration {
                 it.providers = cfg.stringListOrEmpty("providers")
                 it.session = SessionConfiguration.loadOrNull(cfg)
             }.also {
-                it.validate()
+                // TODO: validate the config
             }
         }
-    }
-
-    fun validate() {
-        // TODO
     }
 }

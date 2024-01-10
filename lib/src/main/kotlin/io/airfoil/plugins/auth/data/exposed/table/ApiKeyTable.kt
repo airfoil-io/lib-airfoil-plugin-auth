@@ -21,6 +21,7 @@ object ApiKeyTable : UUIDTable(
     val apiKey = text("api_key")
     val createdAt = timestamp("created_at")
     val updatedAt = timestamp("updated_at")
+    val expiresAt = timestamp("expires_at")
 
     fun findByAPIKey(apiKey: String) =
         ApiKeyTable.select { ApiKeyTable.apiKey eq apiKey }
@@ -38,6 +39,7 @@ class ApiKeyRecord(id: EntityID<UUID>) : UUIDEntity(id) {
     var apiKey by ApiKeyTable.apiKey
     var createdAt by ApiKeyTable.createdAt
     var updatedAt by ApiKeyTable.updatedAt
+    var expiresAt by ApiKeyTable.expiresAt
 
     fun toDTO(): ApiKey = ApiKey(
         id = ApiKeyId(id.value),
@@ -52,5 +54,6 @@ class ApiKeyRecord(id: EntityID<UUID>) : UUIDEntity(id) {
         },
         createdAt = createdAt,
         updatedAt = updatedAt,
+        expiresAt = expiresAt,
     )
 }

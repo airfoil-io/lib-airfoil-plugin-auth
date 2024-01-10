@@ -63,6 +63,7 @@ dependencies {
 		Dependencies.Exposed.Datetime,
 		Dependencies.Exposed.Jdbc,
         Dependencies.Flyway.Core,
+        Dependencies.Google.ApiClient,
         Dependencies.Kotlinx.Datetime,
         Dependencies.Ktor.KotlinxSerialization.Json,
         Dependencies.Ktor.Server.Auth,

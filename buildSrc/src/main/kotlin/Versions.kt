@@ -4,6 +4,9 @@ object Versions {
     }
     const val Exposed = "0.45.0"
     const val Flyway = "9.12.0"
+    object Google {
+        const val ApiClient = "2.2.0"
+    }
     object Kotest {
         const val Core = "5.8.0"
     }

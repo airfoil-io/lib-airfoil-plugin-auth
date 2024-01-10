@@ -2,7 +2,6 @@ package io.airfoil.plugins.auth.providers
 
 import io.airfoil.common.extension.parseBearerToken
 import io.airfoil.plugins.auth.extension.challengeUnauthenticated
-import io.airfoil.plugins.auth.extension.session
 import io.airfoil.plugins.auth.SessionController
 import io.ktor.server.auth.*
 

@@ -11,6 +11,9 @@ object Dependencies {
     object Flyway {
         val Core = DependencySpec("org.flywaydb:flyway-core", Versions.Flyway)
     }
+    object Google {
+        val ApiClient = DependencySpec("com.google.api-client:google-api-client", Versions.Google.ApiClient)
+    }
     object Kotest {
         val AssertionsCore = DependencySpec("io.kotest:kotest-assertions-core", Versions.Kotest.Core)
         val FrameworkDataset = DependencySpec("io.kotest:kotest-framework-datatest", Versions.Kotest.Core)

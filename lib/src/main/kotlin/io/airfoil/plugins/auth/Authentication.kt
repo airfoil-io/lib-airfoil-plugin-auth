@@ -93,6 +93,8 @@ private val AuthenticationControllerPlugin = createApplicationPlugin(
     application.authenticationController(
         AuthenticationController(
             sessionController = application.sessionController,
+            apiKeyRepository = application.apiKeyRepository,
+            otpRepository = application.otpRepository,
             config = pluginConfig,
         )
     )
